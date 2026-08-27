@@ -23,12 +23,17 @@ core tasks are `DONE`.
       `resiliency_analyst`.
 
 ## M2 — Company state + money
-- [ ] **TODO (Claude)** `worksim/state.py` — CompanyState + raw-sqlite3 persistence (SCHEMA + MIGRATIONS),
-      seed from `Scenario.company`, load/save, clean reload on scenario swap
-- [ ] **TODO (Codex)** `worksim/money.py` — bank/ledger: append income/cost entries, current balance,
-      per-run summary. Tests for the arithmetic.
+- [x] **DONE (Claude)** `worksim/state.py` — CompanyState + raw-sqlite3 (`CompanyStore`), each run is a
+      save (no bleed on swap), `create_run`/`load`/`save`/`patch`/`reset_to_scenario`/active-run pointer.
+- [ ] **TODO (Codex)** `worksim/money.py` — bank/ledger keyed by `run_id`. **Seam (fixed):** cash is NOT in
+      CompanyState. Opening balance = `CompanyStore.opening_cash(run_id)`; **current balance = opening_cash +
+      SUM(ledger entries)**. API to build: `add_entry(run_id, amount, reason, kind)` (income=+, cost=−),
+      `balance(run_id)`, `entries(run_id)`, `summary(run_id)`. Own its own table in a raw-sqlite3 module (may
+      reuse `state.connect`/`init_db` pattern; coordinate if you want to share the DB file — `data/worksim.db`).
+      Tests for the arithmetic (income up, cost down, balance nets correctly).
 - [ ] **TODO (Codex)** add an optional `economics` block to the Job Card schema + reference cards
-      (salary/day, task income range) — coordinate the schema field with Claude first.
+      (salary/day, task income range) — **coordinate the schema field with Claude first** (don't edit
+      `worksim/schema.py` solo; propose the fields in a TASKS.md note and Claude adds them).
 
 ## M3 — Scenario engine + assignment
 - [ ] **TODO (Claude)** `worksim/scenario.py` — event -> TaskPacket generation; holds hidden truth;
