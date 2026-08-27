@@ -36,10 +36,11 @@ core tasks are `DONE`.
       `worksim/schema.py` solo; propose the fields in a TASKS.md note and Claude adds them).
 
 ## M3 — Scenario engine + assignment
-- [ ] **TODO (Claude)** `worksim/scenario.py` — event -> TaskPacket generation; holds hidden truth;
-      reveals info only through requested inputs
-- [ ] **TODO (Claude)** `worksim/assign.py` — weighted assignment score (role/skill/tool/capacity/history);
-      add & remove workers. Test against a known fixture.
+- [x] **DONE (Claude)** `worksim/scenario.py` — `ScenarioEngine.generate_task(job, event)` + `InformationBroker`
+      (serves scenario `documents` on request, never the hidden truth; `ground_truth()` is evaluator-only).
+      Added `documents` field to Scenario schema + evidence docs on the q3 scenario.
+- [x] **DONE (Claude)** `worksim/assign.py` — weighted score (§16) + `assign()` primary/support/independent
+      reviewer + risk gates. (Roster add/remove worker lives with the run object, wired at M4.)
 
 ## M4 — Brain + one role end-to-end
 - [ ] **TODO (Claude)** `worksim/brain/__init__.py` — AgentBrain interface (+ a fake/deterministic impl for tests)
@@ -51,10 +52,25 @@ core tasks are `DONE`.
 - [ ] **TODO (Claude)** wire the Data & Reporting Analyst through one full run of `q3_revenue_decline`
 
 ## M5 — Web app
-- [ ] **TODO (Grok)** `worksim/app.py` — FastAPI, `/api/v1` router, serve `web/index.html`, run lifecycle,
+- [ ] **CLAIMED (Grok)** `worksim/app.py` — FastAPI, `/api/v1` router, serve `web/index.html`, run lifecycle,
       transcript polling endpoint
-- [ ] **TODO (Grok)** `worksim/web/index.html` — split-pane UI: chat panel (poll), run/deliverable browser
+- [ ] **CLAIMED (Grok)** `worksim/web/index.html` — split-pane UI: chat panel (poll), run/deliverable browser
       (download links), money dashboard. Job Radar pattern, no build step.
+
+      **M5 contract (proposed — not wired live).** Static shell + 501 stubs may land before M3/M4.
+      Agree this list before Grok wires real calls. Response shapes in comments on the stubs.
+
+      - `GET  /api/v1/health`
+      - `GET  /api/v1/scenarios` · `GET /api/v1/scenarios/{id}`
+      - `GET  /api/v1/jobs` · `GET /api/v1/employees`  (CardLibrary lists)
+      - `POST /api/v1/runs` `{scenario_id, title?}` → create_run (Claude `state.py`)
+      - `GET  /api/v1/runs` · `GET /api/v1/runs/{id}`
+      - `POST /api/v1/runs/{id}/start` · `POST /api/v1/runs/{id}/stop`
+      - `GET  /api/v1/runs/{id}/messages?since=N`  transcript poll (`{messages, next_since}`)
+      - `POST /api/v1/runs/{id}/messages` `{text}` operator chat
+      - `GET  /api/v1/runs/{id}/deliverables` · `GET .../deliverables/{name}`
+      - `GET  /api/v1/runs/{id}/money`  balance + ledger (Codex `money.py`)
+
 
 ## M6 — Evaluator + training capture
 - [ ] **TODO (Claude)** `worksim/evaluate.py` — multi-score rubric via AgentBrain against acceptance_criteria +
@@ -64,5 +80,5 @@ core tasks are `DONE`.
 
 ## M7 — Breadth
 - [ ] **TODO (Codex)** deliverable renderers for the remaining role output types
-- [ ] **TODO (Grok)** more scenarios (fake clients, market datasets, event copy)
+- [ ] **CLAIMED (Grok)** more scenarios (fake clients, market datasets, event copy)
 - [ ] **TODO (Claude)** worker skill growth after graded tasks; seamless scenario swap polish

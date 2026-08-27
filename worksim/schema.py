@@ -154,4 +154,8 @@ class Scenario(BaseModel):
     summary: str = ""
     company: dict[str, Any] = Field(default_factory=dict)
     events: list[dict[str, Any]] = Field(default_factory=list)
+    # Requestable evidence: name -> content. A worker may request these by name
+    # (the information broker serves them); they hold the raw evidence a worker must
+    # synthesize. Distinct from `hidden_truth`, which is the conclusion and is never served.
+    documents: dict[str, str] = Field(default_factory=dict)
     hidden_truth: Optional[str] = None  # engine-only

@@ -30,9 +30,29 @@ events:
   - id: revenue_decline_flagged
     trigger: scenario_start
     requester: VP Operations
+    priority: high
+    deadline: 6 simulated hours
     summary: >
       Q3 revenue is down 11% quarter-over-quarter while customer volume rose 7%.
       Investigate and report.
+
+# Requestable evidence. Workers pull these by name via the information broker and must
+# synthesize the answer themselves — no single document states the conclusion.
+documents:
+  customer_orders_q2_q3: >
+    Order counts rose from 12,880 (Q2) to 13,780 (Q3), +7.0%. New logos: 41 in Q2,
+    47 in Q3. No unusual refund or cancellation spikes.
+  product_mix_q2_q3: >
+    Premium add-on ("Insights Pack") attach rate on NEW customers fell from 61% in Q2
+    to 8% in Q3. Existing customers on the add-on: unchanged. A July platform release
+    ("2024.7") changed the default onboarding path.
+  pricing_and_discounts: >
+    List prices unchanged all year. Average discount 6.4% (Q2) vs 6.6% (Q3) — within
+    normal range. No new promotions ran in Q3.
+  release_notes_2024_7: >
+    2024.7 (July) — "Streamlined onboarding": new signups now land on the Base plan
+    only; the Insights Pack upsell step was removed from the default flow pending a
+    redesign. No customer comms were sent.
 
 # Engine-only. The scenario engine reveals this only through the work; personas
 # never see it directly. It is the ground truth the Evaluator grades against.
