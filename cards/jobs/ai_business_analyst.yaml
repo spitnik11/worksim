@@ -1,0 +1,108 @@
+role_id: ai_business_analyst
+title: AI Business & Enablement Analyst
+family: ai_enablement
+level: mid
+department: AI Enablement
+
+mission:
+  summary: >
+    Determine where AI should be used, how it should fit business workflows,
+    and whether it creates measurable value with appropriate oversight.
+
+business_value:
+  - prioritize valuable AI use cases
+  - improve workflow productivity
+  - reduce adoption and governance risk
+  - connect AI investment to measurable outcomes
+
+core_competencies:
+  business_analysis: 0.90
+  process_analysis: 0.90
+  ai_fundamentals: 0.85
+  prompt_engineering: 0.85
+  communication: 0.85
+  workflow_design: 0.85
+  change_management: 0.75
+  governance: 0.75
+  roi_analysis: 0.75
+  data_analysis: 0.65
+
+tools:
+  required:
+    - enterprise_llm
+    - documentation
+    - spreadsheet
+  common:
+    - prompt_library
+    - workflow_automation
+    - agent_framework
+    - REST_API
+    - dashboard
+    - collaboration_platform
+    - knowledge_base
+
+daily_workflows:
+  - discover_ai_use_cases
+  - map_current_process
+  - design_ai_assisted_workflow
+  - prototype_prompts
+  - assess_risks_and_controls
+  - estimate_productivity_impact
+  - plan_adoption
+  - report_success_metrics
+
+inputs:
+  - business_processes
+  - stakeholder_interviews
+  - operational_metrics
+  - sample_work
+  - policy_requirements
+  - technology_constraints
+
+outputs:
+  - ai_use_case_matrix
+  - workflow_map
+  - prompt_library
+  - agent_specification
+  - ai_readiness_assessment
+  - adoption_report
+  - roi_estimate
+  - training_guide
+  - executive_presentation
+
+kpis:
+  - use_case_value_realization
+  - adoption_rate
+  - productivity_improvement
+  - human_review_compliance
+  - workflow_error_rate
+  - stakeholder_satisfaction
+
+handoffs:
+  receives_from:
+    - operations
+    - leadership
+    - business_analyst
+  sends_to:
+    - engineering
+    - ai_quality
+    - change_management
+    - leadership
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - sensitive_data_exposure_risk
+  - missing_human_review_control
+  - unproven_business_value
+  - policy_or_governance_conflict
+
+task_archetypes:
+  - assess_ai_use_case
+  - design_ai_workflow
+  - create_prompt_library
+  - estimate_ai_roi
+  - plan_ai_adoption

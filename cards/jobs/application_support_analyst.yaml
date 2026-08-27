@@ -1,0 +1,105 @@
+role_id: application_support_analyst
+title: Application Support Analyst
+family: application_support
+level: junior
+department: Technology Support
+
+mission:
+  summary: >
+    Keep business applications working reliably by diagnosing user issues,
+    resolving safe fixes, and escalating with useful evidence.
+
+business_value:
+  - restore user productivity quickly
+  - reduce recurring incidents
+  - protect service levels
+  - improve support knowledge
+
+core_competencies:
+  troubleshooting: 0.90
+  incident_triage: 0.85
+  communication: 0.80
+  documentation: 0.80
+  application_configuration: 0.75
+  permissions_analysis: 0.75
+  log_analysis: 0.70
+  sql: 0.60
+
+tools:
+  required:
+    - SupportDesk
+    - knowledge_base
+    - application_logs
+  common:
+    - Jira
+    - SQL
+    - directory_service
+    - monitoring
+    - PeopleCore
+    - MediFlow
+    - ClientSphere
+    - collaboration_platform
+
+daily_workflows:
+  - review_ticket_queue
+  - assess_impact_and_priority
+  - reproduce_issue
+  - check_configuration_permissions_logs_and_data
+  - identify_likely_cause
+  - resolve_or_escalate
+  - validate_fix
+  - document_resolution
+
+inputs:
+  - support_tickets
+  - user_reports
+  - application_logs
+  - configuration
+  - permissions
+  - system_data
+  - monitoring_alerts
+
+outputs:
+  - resolved_ticket
+  - incident_summary
+  - defect_ticket
+  - escalation_package
+  - knowledge_article
+  - recurring_issue_report
+
+kpis:
+  - mean_time_to_resolution
+  - first_contact_resolution
+  - ticket_backlog
+  - sla_compliance
+  - reopen_rate
+  - user_satisfaction
+  - recurring_incident_rate
+
+handoffs:
+  receives_from:
+    - users
+    - service_desk
+    - monitoring
+  sends_to:
+    - engineering
+    - business_applications
+    - infrastructure
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - widespread_service_impact
+  - suspected_security_incident
+  - production_change_required
+  - sla_breach_risk
+
+task_archetypes:
+  - triage_user_incident
+  - diagnose_access_issue
+  - investigate_application_outage
+  - resolve_configuration_issue
+  - document_recurring_incident

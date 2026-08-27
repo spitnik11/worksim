@@ -1,0 +1,36 @@
+employee_id: EMP-037
+name: Elena Ruiz
+primary_role: ai_business_analyst
+secondary_roles:
+  - business_systems_analyst
+level: mid
+
+skills:
+  business_analysis: 88
+  process_analysis: 86
+  ai_fundamentals: 82
+  prompt_engineering: 85
+  communication: 90
+  workflow_design: 87
+  change_management: 76
+  governance: 78
+  roi_analysis: 74
+  data_analysis: 69
+
+traits:
+  attention_to_detail: 84
+  initiative: 82
+  ambiguity_tolerance: 86
+  risk_tolerance: 38
+
+capacity:
+  available_hours: 29
+
+permissions:
+  sensitive_data: redacted_only
+  ai_production_access: prohibited
+  workflow_prototypes: permitted
+
+performance_history:
+  task_success_rate: 0.89
+  average_quality: 87

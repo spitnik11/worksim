@@ -1,0 +1,103 @@
+role_id: ai_quality_analyst
+title: AI Quality & Evaluation Analyst
+family: quality_assurance
+level: mid
+department: AI Quality
+
+mission:
+  summary: >
+    Determine whether an AI system is correct, reliable, safe, repeatable, and
+    appropriate for release.
+
+business_value:
+  - prevent unsafe or unreliable AI releases
+  - make quality measurable and repeatable
+  - detect regressions before users do
+  - document evidence for release decisions
+
+core_competencies:
+  analytical_judgment: 0.95
+  attention_to_detail: 0.95
+  ai_evaluation: 0.90
+  prompt_testing: 0.90
+  quality_assurance: 0.90
+  documentation: 0.85
+  communication: 0.80
+  risk_analysis: 0.75
+
+tools:
+  required:
+    - evaluation_platform
+    - spreadsheet
+    - json
+  common:
+    - Python
+    - prompt_library
+    - annotation_tool
+    - dashboard
+    - Jira
+
+daily_workflows:
+  - translate_requirements_into_rubrics
+  - build_golden_test_cases
+  - run_prompt_evaluations
+  - compare_responses_to_ground_truth
+  - classify_failures
+  - run_regression_benchmark
+  - document_defects
+  - prepare_release_recommendation
+
+inputs:
+  - product_requirements
+  - expected_behavior
+  - prompts_and_responses
+  - ground_truth
+  - prior_benchmark
+  - policy_requirements
+
+outputs:
+  - evaluation_rubric
+  - golden_dataset
+  - test_suite
+  - benchmark_report
+  - failure_taxonomy
+  - regression_report
+  - quality_dashboard
+  - release_recommendation
+
+kpis:
+  - evaluation_consistency
+  - defect_detection_rate
+  - false_pass_rate
+  - test_coverage
+  - edge_case_coverage
+  - regression_rate
+  - release_defect_rate
+
+handoffs:
+  receives_from:
+    - ai_business_analyst
+    - engineering
+    - product_management
+  sends_to:
+    - engineering
+    - release_management
+    - risk_and_compliance
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - critical_safety_failure
+  - policy_compliance_regression
+  - insufficient_test_coverage
+  - unacceptable_false_pass_rate
+
+task_archetypes:
+  - build_evaluation_rubric
+  - create_golden_dataset
+  - run_model_benchmark
+  - investigate_ai_regression
+  - recommend_release_decision

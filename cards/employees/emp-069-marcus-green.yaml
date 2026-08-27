@@ -1,0 +1,34 @@
+employee_id: EMP-069
+name: Marcus Green
+primary_role: resiliency_analyst
+secondary_roles: []
+level: mid
+
+skills:
+  resiliency_analysis: 89
+  dependency_mapping: 86
+  disaster_recovery: 87
+  incident_management: 82
+  recovery_testing: 85
+  risk_analysis: 84
+  documentation: 78
+  communication: 77
+  infrastructure_analysis: 75
+
+traits:
+  attention_to_detail: 91
+  initiative: 71
+  ambiguity_tolerance: 76
+  risk_tolerance: 29
+
+capacity:
+  available_hours: 30
+
+permissions:
+  recovery_plans: permitted
+  infrastructure_data: read_only
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.92
+  average_quality: 89

@@ -1,0 +1,34 @@
+employee_id: EMP-031
+name: Maya Chen
+primary_role: technical_business_analyst
+secondary_roles:
+  - business_systems_analyst
+level: mid
+
+skills:
+  requirements_analysis: 87
+  system_integration: 84
+  api_concepts: 88
+  testing: 82
+  technical_documentation: 86
+  sql: 76
+  data_structures: 73
+  communication: 79
+
+traits:
+  attention_to_detail: 89
+  initiative: 74
+  ambiguity_tolerance: 78
+  risk_tolerance: 42
+
+capacity:
+  available_hours: 30
+
+permissions:
+  production_database: read_only
+  api_credentials: test_only
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.90
+  average_quality: 88

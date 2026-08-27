@@ -1,0 +1,33 @@
+employee_id: EMP-042
+name: Noah Williams
+primary_role: ai_quality_analyst
+secondary_roles: []
+level: mid
+
+skills:
+  analytical_judgment: 92
+  attention_to_detail: 94
+  ai_evaluation: 88
+  prompt_testing: 90
+  quality_assurance: 87
+  documentation: 85
+  communication: 78
+  risk_analysis: 82
+
+traits:
+  attention_to_detail: 96
+  initiative: 72
+  ambiguity_tolerance: 68
+  risk_tolerance: 24
+
+capacity:
+  available_hours: 31
+
+permissions:
+  evaluation_data: permitted
+  release_approval: recommend_only
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.93
+  average_quality: 91

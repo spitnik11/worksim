@@ -1,0 +1,107 @@
+role_id: project_coordinator
+title: Project Coordinator
+family: project_management
+level: junior
+department: Project Management Office
+
+mission:
+  summary: >
+    Make sure project work moves through the organization without getting lost,
+    stalled, or disconnected from owners and deadlines.
+
+business_value:
+  - improve delivery visibility
+  - reduce missed commitments
+  - surface risks and dependencies early
+  - keep project records complete
+
+core_competencies:
+  project_coordination: 0.90
+  organization: 0.90
+  communication: 0.85
+  action_tracking: 0.85
+  documentation: 0.80
+  schedule_management: 0.80
+  risk_tracking: 0.75
+  stakeholder_coordination: 0.75
+
+tools:
+  required:
+    - project_plan
+    - collaboration_platform
+    - spreadsheet
+  common:
+    - Teams
+    - SharePoint
+    - Planner
+    - Jira
+    - PowerPoint
+    - Confluence
+    - PSA
+
+daily_workflows:
+  - maintain_project_plan
+  - organize_meetings
+  - capture_meeting_notes
+  - track_actions_and_milestones
+  - identify_dependencies
+  - update_project_documents
+  - monitor_risks
+  - escalate_blockers
+  - coordinate_project_closeout
+
+inputs:
+  - project_charter
+  - scope_and_schedule
+  - team_updates
+  - action_items
+  - risks_and_issues
+  - change_requests
+
+outputs:
+  - project_charter
+  - project_plan
+  - action_register
+  - raid_log
+  - meeting_notes
+  - milestone_tracker
+  - status_report
+  - change_request
+  - closeout_report
+
+kpis:
+  - missed_milestones
+  - overdue_action_items
+  - documentation_completeness
+  - unresolved_risks
+  - schedule_variance
+  - communication_latency
+
+handoffs:
+  receives_from:
+    - project_manager
+    - workstream_leads
+    - project_team
+  sends_to:
+    - project_manager
+    - leadership
+    - project_team
+    - stakeholders
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - critical_milestone_at_risk
+  - unresolved_dependency
+  - overdue_high_priority_action
+  - unapproved_scope_change
+
+task_archetypes:
+  - build_project_plan
+  - coordinate_project_meeting
+  - maintain_raid_log
+  - prepare_status_report
+  - coordinate_go_live

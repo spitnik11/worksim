@@ -1,0 +1,35 @@
+employee_id: EMP-053
+name: Owen Patel
+primary_role: business_applications_analyst
+secondary_roles:
+  - application_support_analyst
+level: mid
+
+skills:
+  application_configuration: 88
+  business_process_analysis: 83
+  troubleshooting: 85
+  release_testing: 81
+  requirements_analysis: 78
+  security_analysis: 75
+  data_analysis: 71
+  documentation: 79
+  communication: 76
+
+traits:
+  attention_to_detail: 88
+  initiative: 73
+  ambiguity_tolerance: 70
+  risk_tolerance: 35
+
+capacity:
+  available_hours: 28
+
+permissions:
+  application_configuration: recommend_only
+  production_data: read_only
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.91
+  average_quality: 86

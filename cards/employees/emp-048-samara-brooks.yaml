@@ -1,0 +1,33 @@
+employee_id: EMP-048
+name: Samara Brooks
+primary_role: application_support_analyst
+secondary_roles: []
+level: junior
+
+skills:
+  troubleshooting: 84
+  incident_triage: 86
+  communication: 81
+  documentation: 78
+  application_configuration: 74
+  permissions_analysis: 80
+  log_analysis: 72
+  sql: 61
+
+traits:
+  attention_to_detail: 85
+  initiative: 70
+  ambiguity_tolerance: 74
+  risk_tolerance: 32
+
+capacity:
+  available_hours: 34
+
+permissions:
+  support_tickets: permitted
+  production_logs: read_only
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.86
+  average_quality: 83

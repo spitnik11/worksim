@@ -1,0 +1,33 @@
+employee_id: EMP-061
+name: Lena Hughes
+primary_role: project_coordinator
+secondary_roles: []
+level: junior
+
+skills:
+  project_coordination: 86
+  organization: 91
+  communication: 84
+  action_tracking: 89
+  documentation: 85
+  schedule_management: 82
+  risk_tracking: 76
+  stakeholder_coordination: 80
+
+traits:
+  attention_to_detail: 90
+  initiative: 75
+  ambiguity_tolerance: 69
+  risk_tolerance: 37
+
+capacity:
+  available_hours: 33
+
+permissions:
+  project_records: permitted
+  schedule_updates: permitted
+  budget_approval: prohibited
+
+performance_history:
+  task_success_rate: 0.88
+  average_quality: 85

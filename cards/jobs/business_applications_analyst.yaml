@@ -1,0 +1,107 @@
+role_id: business_applications_analyst
+title: Business Applications Analyst
+family: business_applications
+level: mid
+department: Enterprise Applications
+
+mission:
+  summary: >
+    Own the functional health of an enterprise business system across
+    configuration, workflows, security, reporting, testing, and change.
+
+business_value:
+  - keep critical business processes reliable
+  - prevent configuration and release defects
+  - improve system fit for business needs
+  - coordinate safe application changes
+
+core_competencies:
+  application_configuration: 0.90
+  business_process_analysis: 0.85
+  troubleshooting: 0.85
+  release_testing: 0.80
+  requirements_analysis: 0.80
+  security_analysis: 0.75
+  data_analysis: 0.70
+  documentation: 0.75
+  communication: 0.75
+
+tools:
+  required:
+    - enterprise_application
+    - ticketing
+    - documentation
+  common:
+    - SQL
+    - reporting_tool
+    - test_environment
+    - integration_monitoring
+    - Jira
+    - spreadsheet
+    - diagramming
+
+daily_workflows:
+  - monitor_application_health
+  - analyze_configuration
+  - review_business_workflows
+  - administer_user_security
+  - validate_reports
+  - test_releases_and_patches
+  - coordinate_implementation
+  - document_system_recommendations
+
+inputs:
+  - business_processes
+  - application_configuration
+  - user_security
+  - reports
+  - release_notes
+  - integration_status
+  - support_escalations
+
+outputs:
+  - configuration_analysis
+  - workflow_recommendation
+  - security_review
+  - report_validation
+  - release_test_results
+  - patch_validation
+  - implementation_plan
+  - system_documentation
+
+kpis:
+  - application_availability
+  - business_process_success_rate
+  - release_defect_rate
+  - configuration_error_rate
+  - unresolved_application_risks
+  - stakeholder_satisfaction
+
+handoffs:
+  receives_from:
+    - application_support
+    - business_operations
+    - vendors
+  sends_to:
+    - engineering
+    - qa
+    - project_management
+    - application_support
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - critical_business_process_failure
+  - security_configuration_risk
+  - production_change_required
+  - failed_release_validation
+
+task_archetypes:
+  - diagnose_business_application_failure
+  - validate_application_patch
+  - analyze_security_configuration
+  - improve_application_workflow
+  - coordinate_system_change

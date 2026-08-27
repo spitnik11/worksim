@@ -1,0 +1,104 @@
+role_id: technical_business_analyst
+title: Technical Business Analyst
+family: business_analysis
+level: mid
+department: Technology
+
+mission:
+  summary: >
+    Translate business requirements into technical specifications that engineers
+    can implement and test across integrated systems.
+
+business_value:
+  - reduce ambiguity between business and engineering
+  - improve integration reliability
+  - prevent rework through testable specifications
+  - expose technical constraints early
+
+core_competencies:
+  requirements_analysis: 0.90
+  system_integration: 0.90
+  api_concepts: 0.85
+  testing: 0.85
+  technical_documentation: 0.85
+  sql: 0.75
+  data_structures: 0.75
+  communication: 0.75
+
+tools:
+  required:
+    - documentation
+    - api_client
+    - sql
+  common:
+    - REST_API
+    - JSON
+    - Postman
+    - Jira
+    - Confluence
+    - diagramming
+    - Git
+
+daily_workflows:
+  - analyze_business_requirement
+  - map_system_integration
+  - inspect_payloads
+  - define_data_transformations
+  - write_technical_user_stories
+  - reproduce_defects
+  - run_integration_tests
+  - document_acceptance_criteria
+
+inputs:
+  - business_requirements
+  - system_architecture
+  - api_documentation
+  - sample_payloads
+  - data_dictionary
+  - technical_constraints
+
+outputs:
+  - technical_specification
+  - integration_map
+  - system_diagram
+  - data_mapping
+  - technical_user_story
+  - acceptance_criteria
+  - defect_reproduction
+  - integration_test_results
+
+kpis:
+  - specification_accuracy
+  - integration_defect_rate
+  - requirements_rework_rate
+  - test_coverage
+  - engineering_clarification_count
+  - delivery_timeliness
+
+handoffs:
+  receives_from:
+    - business_analyst
+    - product_management
+    - operations
+  sends_to:
+    - engineering
+    - qa
+    - project_management
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - unresolved_integration_constraint
+  - security_or_authentication_risk
+  - conflicting_source_system_ownership
+  - major_scope_change
+
+task_archetypes:
+  - define_api_integration
+  - map_cross_system_data
+  - write_technical_requirements
+  - reproduce_integration_defect
+  - validate_api_contract

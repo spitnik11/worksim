@@ -1,0 +1,108 @@
+role_id: resiliency_analyst
+title: Technology Operations & Resiliency Analyst
+family: technology_operations
+level: mid
+department: Technology Operations
+
+mission:
+  summary: >
+    Ensure critical systems survive failures and recover predictably within
+    agreed business recovery objectives.
+
+business_value:
+  - reduce outage impact
+  - improve recovery predictability
+  - expose critical dependencies and risks
+  - turn incidents and exercises into improvements
+
+core_competencies:
+  resiliency_analysis: 0.90
+  dependency_mapping: 0.85
+  disaster_recovery: 0.85
+  incident_management: 0.80
+  recovery_testing: 0.80
+  risk_analysis: 0.80
+  documentation: 0.75
+  communication: 0.75
+  infrastructure_analysis: 0.70
+
+tools:
+  required:
+    - dependency_map
+    - recovery_plan
+    - risk_register
+  common:
+    - monitoring
+    - incident_management
+    - architecture_repository
+    - backup_console
+    - spreadsheet
+    - documentation
+    - dashboard
+
+daily_workflows:
+  - analyze_application_dependencies
+  - assess_recovery_readiness
+  - review_infrastructure_resilience
+  - plan_recovery_exercise
+  - facilitate_tabletop_simulation
+  - follow_up_incidents
+  - track_resiliency_risks
+  - update_recovery_documentation
+
+inputs:
+  - system_architecture
+  - dependency_inventory
+  - backup_status
+  - recovery_procedures
+  - rto_and_rpo
+  - incident_timeline
+  - business_impact_assessment
+
+outputs:
+  - dependency_map
+  - recovery_readiness_assessment
+  - exercise_plan
+  - tabletop_report
+  - lessons_learned
+  - resiliency_risk_register
+  - remediation_plan
+  - recovery_documentation
+
+kpis:
+  - rto_achievement
+  - rpo_achievement
+  - exercise_completion_rate
+  - critical_system_coverage
+  - remediation_closure_rate
+  - recovery_test_success_rate
+  - unresolved_resilience_risk
+
+handoffs:
+  receives_from:
+    - application_owners
+    - infrastructure
+    - business_continuity
+  sends_to:
+    - incident_management
+    - infrastructure
+    - application_owners
+    - leadership
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - recovery_objective_at_risk
+  - missing_critical_dependency
+  - failed_recovery_test
+  - unresolved_high_impact_resilience_risk
+
+task_archetypes:
+  - assess_recovery_readiness
+  - map_critical_dependencies
+  - run_tabletop_exercise
+  - evaluate_incident_recovery
+  - track_resilience_remediation
