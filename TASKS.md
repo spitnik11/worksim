@@ -16,7 +16,7 @@ core tasks are `DONE`.
 - [x] **DONE (Claude)** `worksim/cards.py` — CardLibrary loader/validator (the save-file registry)
 - [x] **DONE (Claude)** reference cards: `data_reporting_analyst`, `business_systems_analyst`, 2 employees, 1 scenario
 - [x] **DONE (Claude)** `tests/test_cards.py`
-- [ ] **TODO (Codex)** author the remaining 7 canonical Job Cards from the source doc, each with a matching
+- [ ] **CLAIMED (Codex)** author the remaining 7 canonical Job Cards from the source doc, each with a matching
       employee or two. Copy the shape of the two reference cards. Validate with `python -m worksim.cards`.
       Roles: `technical_business_analyst`, `ai_business_analyst`, `ai_quality_analyst`,
       `application_support_analyst`, `business_applications_analyst`, `project_coordinator`,
