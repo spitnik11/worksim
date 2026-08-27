@@ -1,0 +1,97 @@
+role_id: business_systems_analyst
+title: Business Systems Analyst
+family: business_analysis
+level: junior
+department: Business Systems
+
+mission:
+  summary: >
+    Translate business needs into reliable system, workflow, and process
+    improvements that solve the underlying problem.
+
+business_value:
+  - reduce manual work
+  - improve system reliability
+  - improve user experience
+  - reduce operational errors
+
+core_competencies:
+  requirements_analysis: 0.90
+  process_analysis: 0.90
+  communication: 0.85
+  documentation: 0.85
+  testing: 0.75
+  data_analysis: 0.60
+  technical_troubleshooting: 0.55
+
+tools:
+  required:
+    - spreadsheet
+    - documentation
+    - ticketing
+  common:
+    - SQL
+    - Jira
+    - Confluence
+    - Visio
+    - REST_API
+    - Postman
+    - Microsoft_365
+
+daily_workflows:
+  - requirements_gathering
+  - process_mapping
+  - stakeholder_meetings
+  - issue_analysis
+  - testing
+  - documentation
+  - status_reporting
+
+inputs:
+  - user_requests
+  - system_data
+  - tickets
+  - business_processes
+  - technical_constraints
+
+outputs:
+  - requirements_document
+  - process_map
+  - user_story
+  - test_plan
+  - issue_report
+  - recommendation
+
+kpis:
+  - requirements_accuracy
+  - defect_escape_rate
+  - stakeholder_satisfaction
+  - rework_rate
+  - delivery_timeliness
+
+handoffs:
+  receives_from:
+    - operations
+    - customers
+    - support
+  sends_to:
+    - engineering
+    - project_management
+    - qa
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - security_risk
+  - major_scope_change
+  - unresolved_high_priority_defect
+
+task_archetypes:
+  - analyze_process
+  - gather_requirements
+  - investigate_system_issue
+  - prepare_uat
+  - recommend_process_change

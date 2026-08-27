@@ -1,0 +1,32 @@
+employee_id: EMP-014
+name: Jordan Lee
+primary_role: business_systems_analyst
+secondary_roles:
+  - data_reporting_analyst
+level: junior
+
+skills:
+  requirements_analysis: 82
+  sql: 64
+  testing: 77
+  data_analysis: 58
+  documentation: 88
+  communication: 80
+
+traits:
+  attention_to_detail: 86
+  initiative: 61
+  ambiguity_tolerance: 72
+  risk_tolerance: 40
+
+capacity:
+  available_hours: 27
+
+permissions:
+  production_database: read_only
+  customer_data: permitted
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.87
+  average_quality: 84

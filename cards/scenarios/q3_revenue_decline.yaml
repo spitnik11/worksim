@@ -1,0 +1,43 @@
+scenario_id: q3_revenue_decline
+title: Q3 Revenue Decline at Acme Retail
+summary: >
+  Revenue declined 11% despite a 7% increase in customer volume. Leadership wants
+  to know why, with evidence, and a recommended next action.
+
+company:
+  name: Meridian Commerce
+  cash: 22400000
+  employees: 430
+  customers: 82
+  markets:
+    US:
+      revenue: 41000000
+  products:
+    enterprise_platform:
+      customers: 62
+      uptime: 0.997
+  projects:
+    - CRM migration
+    - AI support rollout
+  risks:
+    - cloud concentration
+    - customer churn
+  competitors:
+    - NovaWorks
+    - Ardent Systems
+
+events:
+  - id: revenue_decline_flagged
+    trigger: scenario_start
+    requester: VP Operations
+    summary: >
+      Q3 revenue is down 11% quarter-over-quarter while customer volume rose 7%.
+      Investigate and report.
+
+# Engine-only. The scenario engine reveals this only through the work; personas
+# never see it directly. It is the ground truth the Evaluator grades against.
+hidden_truth: >
+  The decline is driven by a shift in product mix: a high-margin add-on was
+  silently deprecated in a July release, so new customers land on the base plan
+  only. Volume rose but average revenue per customer fell ~17%. Discounting and
+  churn are red herrings — both are within normal range.

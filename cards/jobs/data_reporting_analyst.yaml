@@ -1,0 +1,100 @@
+role_id: data_reporting_analyst
+title: Data & Reporting Analyst
+family: data_analysis
+level: junior
+department: Data & Analytics
+
+mission:
+  summary: >
+    Turn operational and business data into trusted information that people can
+    make decisions from.
+
+business_value:
+  - reduce decision latency
+  - improve data trust and quality
+  - surface trends and anomalies early
+  - support stakeholders with evidence
+
+core_competencies:
+  data_analysis: 0.90
+  sql: 0.85
+  data_validation: 0.85
+  reporting: 0.85
+  analytical_thinking: 0.80
+  communication: 0.70
+  visualization: 0.65
+  python: 0.50
+  statistics: 0.50
+
+tools:
+  required:
+    - spreadsheet
+    - sql
+  common:
+    - Power_BI
+    - Tableau
+    - Python_Pandas
+    - CSV_JSON
+    - REST_API
+    - data_warehouse
+    - Jira
+    - SharePoint
+
+daily_workflows:
+  - review_dashboard_refresh
+  - investigate_kpi_validation
+  - stakeholder_meeting
+  - write_sql
+  - ad_hoc_analysis
+  - update_dashboard
+  - validate_against_source
+  - write_executive_summary
+
+inputs:
+  - system_data
+  - business_requests
+  - source_databases
+  - prior_reports
+
+outputs:
+  - kpi_dashboard
+  - sql_query
+  - data_quality_report
+  - trend_analysis
+  - executive_summary
+  - metric_dictionary
+  - data_extract
+
+kpis:
+  - report_accuracy
+  - dashboard_freshness
+  - analysis_turnaround_time
+  - data_error_rate
+  - stakeholder_adoption
+  - unresolved_discrepancies
+
+handoffs:
+  receives_from:
+    - operations
+    - business_analyst
+    - leadership
+  sends_to:
+    - leadership
+    - business_analyst
+    - project_management
+
+simulation_permissions:
+  may_request_data: true
+  may_modify_production: false
+  may_approve_release: false
+
+escalation_rules:
+  - data_integrity_risk
+  - conflicting_source_of_truth
+  - unresolved_high_priority_discrepancy
+
+task_archetypes:
+  - analyze_metric_decline
+  - investigate_data_quality_incident
+  - build_recurring_report
+  - market_or_segment_analysis

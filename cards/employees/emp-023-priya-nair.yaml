@@ -1,0 +1,32 @@
+employee_id: EMP-023
+name: Priya Nair
+primary_role: data_reporting_analyst
+secondary_roles: []
+level: mid
+
+skills:
+  data_analysis: 88
+  sql: 84
+  data_validation: 82
+  reporting: 80
+  visualization: 74
+  python: 66
+  communication: 71
+
+traits:
+  attention_to_detail: 90
+  initiative: 68
+  ambiguity_tolerance: 64
+  risk_tolerance: 45
+
+capacity:
+  available_hours: 32
+
+permissions:
+  production_database: read_only
+  customer_data: permitted
+  production_changes: prohibited
+
+performance_history:
+  task_success_rate: 0.91
+  average_quality: 87
