@@ -25,12 +25,12 @@ core tasks are `DONE`.
 ## M2 — Company state + money
 - [x] **DONE (Claude)** `worksim/state.py` — CompanyState + raw-sqlite3 (`CompanyStore`), each run is a
       save (no bleed on swap), `create_run`/`load`/`save`/`patch`/`reset_to_scenario`/active-run pointer.
-- [ ] **TODO (Codex)** `worksim/money.py` — bank/ledger keyed by `run_id`. **Seam (fixed):** cash is NOT in
-      CompanyState. Opening balance = `CompanyStore.opening_cash(run_id)`; **current balance = opening_cash +
-      SUM(ledger entries)**. API to build: `add_entry(run_id, amount, reason, kind)` (income=+, cost=−),
-      `balance(run_id)`, `entries(run_id)`, `summary(run_id)`. Own its own table in a raw-sqlite3 module (may
-      reuse `state.connect`/`init_db` pattern; coordinate if you want to share the DB file — `data/worksim.db`).
-      Tests for the arithmetic (income up, cost down, balance nets correctly).
+- [x] **DONE (Codex via Omnigent, reviewed+integrated by Claude)** `worksim/money.py` — `MoneyStore` over the
+      shared `data/worksim.db` (reuses `state.connect`/`init_db`; `ledger` table FK→runs, CHECK on kind, index).
+      Actual API: `add_entry(run_id, amount, reason, kind)` (income=+, cost=−, validates), `entries(run_id)`
+      (oldest-first), `balance(run_id)` and `summary(run_id)` read opening_cash from `company_state` (no param).
+      2 tests integrate with `CompanyStore`. Review notes: entries oldest-first (spec said newest — accepted;
+      UI can reverse); `summary` keys `{opening_cash, income, costs, balance}` (no `count`).
 - [ ] **TODO (Codex)** add an optional `economics` block to the Job Card schema + reference cards
       (salary/day, task income range) — **coordinate the schema field with Claude first** (don't edit
       `worksim/schema.py` solo; propose the fields in a TASKS.md note and Claude adds them).
