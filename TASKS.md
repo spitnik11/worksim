@@ -57,10 +57,13 @@ core tasks are `DONE`.
       today; extend it to call your renderer(s) so the Data Analyst emits a real spreadsheet + dashboard.
 
 ## M5 — Web app
-- [ ] **CLAIMED (Grok)** `worksim/app.py` — FastAPI, `/api/v1` router, serve `web/index.html`, run lifecycle,
-      transcript polling endpoint
-- [ ] **CLAIMED (Grok)** `worksim/web/index.html` — split-pane UI: chat panel (poll), run/deliverable browser
-      (download links), money dashboard. Job Radar pattern, no build step.
+- [x] **DONE (Grok, reviewed+integrated by Claude)** `worksim/app.py` — FastAPI `/api/v1`, health + shell live,
+      every data route a 501 stub whose message is the proposed contract (polling, not SSE). In-lane, green.
+- [x] **DONE (Grok, reviewed+integrated by Claude)** `worksim/web/index.html` — 301-line single-file split-pane
+      shell (chat/run/money tabs), `api(p,o)` fetch helper, no build step, `EventSource`-free.
+- [ ] **TODO (Claude, live wiring)** replace the `/api/v1` 501 stubs with real calls into `cards`/`state`/`run`
+      (+ Codex's `money.py`): scenarios/jobs/employees lists, `POST /runs`, `GET /runs/{id}/messages?since=N`
+      transcript polling, deliverable listing/download, money summary. This is the M5↔engine integration.
 
       **M5 contract (proposed — not wired live).** Static shell + 501 stubs may land before M3/M4.
       Agree this list before Grok wires real calls. Response shapes in comments on the stubs.

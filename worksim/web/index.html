@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WorkSim</title>
+<style>
+  :root{
+    --canvas:#f6f5f4; --surface:#ffffff; --lift:#f0eeea;
+    --ink:#1c1b19; --muted:#6b6864; --subtle:#9a968f;
+    --accent:#b4532a; --accent-ink:#fff8f5;
+    --hair:rgba(28,27,25,.10); --hair-soft:rgba(28,27,25,.06);
+    --hover:rgba(28,27,25,.05);
+    --good:#2f7a52; --good-soft:rgba(47,122,82,.12);
+    --danger:#c0363a; --danger-soft:rgba(192,54,58,.12);
+    --ok:#b5811f;
+    --font:-apple-system,BlinkMacSystemFont,"Segoe UI Variable Text","Segoe UI",system-ui,Roboto,"Helvetica Neue",Arial,sans-serif;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono","Cascadia Mono",Menlo,Consolas,monospace;
+    --r-btn:8px; --r-card:12px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --canvas:#0e0f10; --surface:#16181b; --lift:#1c1f23;
+      --ink:#f4f4f6; --muted:#9aa0a6; --subtle:#6d7178;
+      --accent:#e08a4f; --accent-ink:#1a0e08;
+      --hair:rgba(255,255,255,.12); --hair-soft:rgba(255,255,255,.07);
+      --hover:rgba(255,255,255,.05);
+      --good:#4cc389; --good-soft:rgba(76,195,137,.14);
+      --danger:#f2495c; --danger-soft:rgba(242,73,92,.14);
+      --ok:#e0a53a;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;background:var(--canvas);color:var(--ink);
+    font-family:var(--font);font-size:14px;line-height:1.45;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+  button,select,textarea,input{font:inherit;color:inherit}
+  button{cursor:pointer}
+  a{color:var(--accent);text-decoration:none}
+  ::selection{background:rgba(180,83,42,.18)}
+  :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  html{scrollbar-width:thin;scrollbar-color:var(--hair) transparent}
+  *::-webkit-scrollbar{width:8px;height:8px}
+  *::-webkit-scrollbar-thumb{background:var(--hair);border-radius:9999px}
+  svg{display:block}
+
+  .app{display:grid;grid-template-rows:52px 1fr;grid-template-columns:minmax(320px,42%) 1fr;
+    height:100vh;min-height:0}
+  header{grid-column:1/-1;display:flex;align-items:center;gap:16px;padding:0 16px;
+    border-bottom:1px solid var(--hair);background:var(--surface)}
+  .brand{display:flex;align-items:center;gap:10px;font-size:16px;font-weight:600;
+    letter-spacing:-.02em}
+  .mark{width:18px;height:18px;border-radius:4px;background:var(--accent);flex:none}
+  .meta{margin-left:auto;display:flex;align-items:center;gap:12px;font-size:12px;color:var(--subtle);
+    font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--subtle);flex:none}
+  .dot.on{background:var(--good)} .dot.off{background:var(--danger)}
+  .pill{font-size:12px;font-weight:500;padding:2px 8px;border-radius:9999px;
+    border:1px solid var(--hair);color:var(--muted);background:var(--lift)}
+  .pill.warn{color:var(--ok);border-color:transparent;background:rgba(181,129,31,.14)}
+
+  .pane{min-width:0;min-height:0;display:flex;flex-direction:column;overflow:hidden}
+  .left{border-right:1px solid var(--hair);background:var(--canvas)}
+  .right{background:var(--canvas)}
+
+  .controls{padding:12px 16px;border-bottom:1px solid var(--hair);background:var(--surface);
+    display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+  .controls label{font-size:12px;color:var(--subtle);display:flex;align-items:center;gap:8px}
+  select{background:var(--lift);border:1px solid var(--hair);border-radius:var(--r-btn);
+    padding:6px 10px;min-width:180px}
+  .btn{border:1px solid var(--hair);background:var(--lift);color:var(--ink);
+    border-radius:var(--r-btn);padding:6px 12px;font-size:13px;font-weight:500;min-height:32px}
+  .btn:hover:not(:disabled){border-color:var(--subtle)}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .btn:disabled{opacity:.45;cursor:default}
+
+  .chat{flex:1;overflow:auto;padding:16px 16px 8px;display:flex;flex-direction:column;gap:12px}
+  .msg{max-width:36ch}
+  .msg .who{font-size:12px;color:var(--subtle);margin-bottom:4px;display:flex;gap:8px}
+  .msg .who b{color:var(--muted);font-weight:600}
+  .msg .body{background:var(--surface);border:1px solid var(--hair);border-radius:var(--r-card);
+    padding:10px 12px;font-size:14px;line-height:1.5;white-space:pre-wrap}
+  .msg.sys .body{background:transparent;border-style:dashed;color:var(--muted)}
+  .empty{color:var(--subtle);font-size:13px;line-height:1.5;padding:24px 8px}
+
+  .compose{padding:12px 16px 16px;border-top:1px solid var(--hair);background:var(--surface);
+    display:flex;gap:8px;align-items:flex-end}
+  textarea{flex:1;resize:none;min-height:40px;max-height:120px;padding:8px 10px;
+    border:1px solid var(--hair);border-radius:var(--r-btn);background:var(--lift);line-height:1.4}
+  textarea:disabled{opacity:.6}
+
+  .tabs{display:flex;gap:0;padding:0 8px;border-bottom:1px solid var(--hair);background:var(--surface)}
+  .tab{border:0;background:transparent;padding:12px 14px;font-size:13px;font-weight:500;
+    color:var(--subtle);border-bottom:2px solid transparent;margin-bottom:-1px}
+  .tab:hover{color:var(--ink)}
+  .tab.on{color:var(--ink);border-bottom-color:var(--accent)}
+  .panel{flex:1;overflow:auto;padding:20px 20px 32px}
+  .panel h2{margin:0 0 4px;font-size:18px;font-weight:600;letter-spacing:-.02em;line-height:1.15}
+  .panel .sub{margin:0 0 16px;color:var(--muted);font-size:13px;max-width:52ch;line-height:1.5}
+
+  .kv{display:grid;grid-template-columns:120px 1fr;gap:8px 16px;font-size:13px;
+    padding:16px;border:1px solid var(--hair);border-radius:var(--r-card);background:var(--surface);
+    margin-bottom:16px}
+  .kv dt{color:var(--subtle)} .kv dd{margin:0;font-feature-settings:"tnum"}
+  .money{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px}
+  .stat{flex:1;min-width:140px;padding:16px;border:1px solid var(--hair);border-radius:var(--r-card);
+    background:var(--surface)}
+  .stat .k{font-size:12px;color:var(--subtle);margin-bottom:6px}
+  .stat .v{font-size:22px;font-weight:600;letter-spacing:-.02em;line-height:1.1;
+    font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+  .stat .v.good{color:var(--good)} .stat .v.muted{color:var(--subtle)}
+  .formula{font-family:var(--mono);font-size:12px;color:var(--subtle);margin:0 0 16px}
+  .files{border:1px solid var(--hair);border-radius:var(--r-card);background:var(--surface);overflow:hidden}
+  .files .row{display:flex;align-items:center;gap:12px;padding:10px 14px;border-top:1px solid var(--hair-soft);
+    font-size:13px}
+  .files .row:first-child{border-top:0}
+  .files a{margin-left:auto;font-size:12px}
+  .note{font-size:12px;color:var(--subtle);margin-top:16px;max-width:52ch;line-height:1.5}
+
+  @media (max-width:840px){
+    .app{grid-template-columns:1fr;grid-template-rows:52px minmax(280px,1fr) minmax(280px,1fr)}
+    .left{border-right:0;border-bottom:1px solid var(--hair)}
+  }
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><span class="mark" aria-hidden="true"></span>WorkSim</div>
+    <span class="pill warn" id="runpill">no run</span>
+    <div class="meta">
+      <span class="dot off" id="apidot"></span>
+      <span id="apistat">api…</span>
+      <span>127.0.0.1:8500</span>
+    </div>
+  </header>
+
+  <section class="pane left" aria-label="Chat">
+    <div class="controls">
+      <label>Scenario
+        <select id="scenario" aria-label="Scenario"></select>
+      </label>
+      <button class="btn primary" id="newrun" disabled title="Blocked on M3/M4 run lifecycle">New run</button>
+    </div>
+    <div class="chat" id="chat" role="log" aria-live="polite"></div>
+    <form class="compose" id="composer">
+      <textarea id="draft" rows="1" placeholder="No active run — chat is idle until M3/M4." disabled></textarea>
+      <button class="btn primary" type="submit" disabled>Send</button>
+    </form>
+  </section>
+
+  <section class="pane right" aria-label="Run browser">
+    <div class="tabs" role="tablist">
+      <button class="tab on" role="tab" aria-selected="true" data-tab="run">Run</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="files">Deliverables</button>
+      <button class="tab" role="tab" aria-selected="false" data-tab="money">Money</button>
+    </div>
+    <div class="panel" id="panel"></div>
+  </section>
+</div>
+<script>
+const api=(p,o)=>fetch('/api/v1'+p,o);
+const POLL_MS=1500;
+
+/* Local card previews only — not live CompanyState. Live wiring waits on the M5 contract. */
+const CARDS=[
+  {id:'q3_revenue_decline',title:'Q3 Revenue Decline at Acme Retail',
+   company:'Meridian Commerce',cash:22400000,employees:430,customers:82,
+   summary:'Revenue down 11% while customer volume rose 7%.'},
+  {id:'five_users_app_down',title:'Five Users Report ClientSphere Isn\'t Working',
+   company:'Helix Benefits',cash:18600000,employees:290,customers:47,
+   summary:'Five tickets in twenty minutes. Outage, five bugs, permissions, or a bad deploy?'},
+  {id:'support_ai_prompt_ship',title:'Ship the Support-AI Prompt Update?',
+   company:'Vesper Credit',cash:41200000,employees:610,customers:140,
+   summary:'Accuracy 92% → 95%. Policy compliance unknown. Ship Friday?'},
+  {id:'crm_migration_500',title:'CRM Migration for 500 Employees in Six Weeks',
+   company:'Northshore Mutual',cash:33800000,employees:500,customers:96,
+   summary:'Board date vs vendor windows, change freeze, training, UAT snapshot.'},
+];
+
+const moneyFmt=n=>n==null?'—':n.toLocaleString('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0});
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+let runId=null, since=0, tab='run', pollTimer=null;
+
+const sel=document.getElementById('scenario');
+CARDS.forEach(c=>{
+  const o=document.createElement('option');
+  o.value=c.id; o.textContent=c.company+' — '+c.title;
+  sel.appendChild(o);
+});
+sel.onchange=()=>renderPanel();
+
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.onclick=()=>{
+    tab=btn.dataset.tab;
+    document.querySelectorAll('.tab').forEach(t=>{
+      const on=t===btn; t.classList.toggle('on',on); t.setAttribute('aria-selected',on);
+    });
+    renderPanel();
+  };
+});
+
+function card(){ return CARDS.find(c=>c.id===sel.value)||CARDS[0]; }
+
+function renderPanel(){
+  const c=card();
+  const p=document.getElementById('panel');
+  if(tab==='run'){
+    p.innerHTML=`<h2>${esc(c.title)}</h2>
+      <p class="sub">Card preview — not a live save. New run stays disabled until the scenario engine owns a lifecycle.</p>
+      <dl class="kv">
+        <dt>Company</dt><dd>${esc(c.company)}</dd>
+        <dt>Scenario</dt><dd><span style="font-family:var(--mono);font-size:12px">${esc(c.id)}</span></dd>
+        <dt>Employees</dt><dd>${c.employees.toLocaleString()}</dd>
+        <dt>Customers</dt><dd>${c.customers.toLocaleString()}</dd>
+        <dt>Opening cash</dt><dd>${moneyFmt(c.cash)}</dd>
+        <dt>Active run</dt><dd>${runId?esc(runId):'none'}</dd>
+      </dl>
+      <p class="sub">${esc(c.summary)}</p>
+      <p class="note">hidden_truth is engine-only and is never rendered here.</p>`;
+  }else if(tab==='files'){
+    p.innerHTML=`<h2>Deliverables</h2>
+      <p class="sub">Files written to <span style="font-family:var(--mono)">runs/&lt;id&gt;/deliverables/</span> will list here.</p>
+      <div class="files"><div class="row empty" style="padding:20px">No run, so no files. Download links wire to GET /api/v1/runs/&lt;id&gt;/deliverables/&lt;name&gt;.</div></div>`;
+  }else{
+    p.innerHTML=`<h2>Money</h2>
+      <p class="formula">balance = opening_cash + SUM(ledger)</p>
+      <div class="money">
+        <div class="stat"><div class="k">Opening cash</div><div class="v">${moneyFmt(c.cash)}</div></div>
+        <div class="stat"><div class="k">Live balance</div><div class="v muted">—</div></div>
+        <div class="stat"><div class="k">Ledger entries</div><div class="v muted">0</div></div>
+      </div>
+      <p class="note">Live figures come from Codex money.py via GET /api/v1/runs/&lt;id&gt;/money. Opening cash above is the selected card's seed, not a ledger.</p>`;
+  }
+}
+
+function sys(text){
+  const el=document.createElement('div');
+  el.className='msg sys';
+  el.innerHTML=`<div class="who"><b>system</b></div><div class="body">${esc(text)}</div>`;
+  document.getElementById('chat').appendChild(el);
+}
+
+function appendMsg(m){
+  const el=document.createElement('div');
+  el.className='msg';
+  el.innerHTML=`<div class="who"><b>${esc(m.speaker||m.role||'worker')}</b><span>${esc(m.ts||'')}</span></div>
+    <div class="body">${esc(m.text||'')}</div>`;
+  const box=document.getElementById('chat');
+  box.appendChild(el);
+  box.scrollTop=box.scrollHeight;
+}
+
+async function poll(){
+  if(!runId) return;
+  try{
+    const r=await api('/runs/'+encodeURIComponent(runId)+'/messages?since='+since);
+    const data=await r.json().catch(()=>({}));
+    if(!r.ok) return; /* 501 stub — stay idle */
+    (data.messages||[]).forEach(appendMsg);
+    if(data.next_since!=null) since=data.next_since;
+  }catch(e){}
+}
+
+function startPoll(){
+  if(pollTimer) clearInterval(pollTimer);
+  if(!runId) return;
+  pollTimer=setInterval(poll, POLL_MS);
+  poll();
+}
+
+document.getElementById('composer').onsubmit=async ev=>{
+  ev.preventDefault();
+  const box=document.getElementById('draft');
+  const text=box.value.trim();
+  if(!text||!runId) return;
+  box.value='';
+  try{
+    const r=await api('/runs/'+encodeURIComponent(runId)+'/messages',{
+      method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({text})
+    });
+    if(!r.ok) sys('Send is stubbed (501) until M3/M4.');
+  }catch(e){ sys('Send failed.'); }
+};
+
+api('/health').then(r=>r.json()).then(h=>{
+  const on=!!(h&&h.ok);
+  document.getElementById('apidot').className='dot '+(on?'on':'off');
+  document.getElementById('apistat').textContent=on?'api up':'api down';
+}).catch(()=>{
+  document.getElementById('apidot').className='dot off';
+  document.getElementById('apistat').textContent='api down';
+});
+
+sys('Transcript polling is idle. There is no run lifecycle to display until M3/M4 land. Endpoints other than /health are 501 stubs — see TASKS.md.');
+renderPanel();
+</script>
+</body>
+</html>

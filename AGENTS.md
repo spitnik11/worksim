@@ -4,6 +4,15 @@ Three agents build WorkSim in one shared git repo: **Claude** (hard seams), **Co
 (mechanical breadth), **Grok** (UI + scenario content). `CLAUDE.md`, `CODEX.md`, and
 `GROK.md` all defer to THIS file so conventions never diverge. Read this before writing code.
 
+## Operating model — Claude is the sole conductor (2026-08-27)
+
+Claude drives Codex and Grok headlessly via **Omnigent** and reviews everything:
+`& "Z:\Claude app\omnigent\.venv\Scripts\omnigent.exe" run --project "Z:\Claude app\worksim" --timeout 1800 "@codex <task>"`
+(or `@grok`). Dispatched agents run with full repo access but are told **not to commit** —
+Claude reviews the resulting diff, runs `pytest`, and commits (as Gabriel Pina). This keeps a
+single writer on the tree (no races) and Claude as reviewer. The lane sections below define
+what each agent is asked to do; Claude pastes the relevant lane + task into the dispatch prompt.
+
 ## What WorkSim is
 
 A company simulation engine driven by Job Cards. Pipeline:
