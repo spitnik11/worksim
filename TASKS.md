@@ -43,13 +43,18 @@ core tasks are `DONE`.
       reviewer + risk gates. (Roster add/remove worker lives with the run object, wired at M4.)
 
 ## M4 — Brain + one role end-to-end
-- [ ] **TODO (Claude)** `worksim/brain/__init__.py` — AgentBrain interface (+ a fake/deterministic impl for tests)
-- [ ] **TODO (Claude)** `worksim/brain/llm.py` — cloud LLM impl (Anthropic via httpx); reads key from env, never committed
-- [ ] **TODO (Claude)** `worksim/personas.py` — build persona system prompts from JobCard + EmployeeProfile;
-      always uses `TaskPacket.worker_view()`
-- [ ] **TODO (Codex)** `worksim/deliverables/xlsx.py` + `dashboard.py` — enough for the Data Analyst to emit a
-      real `.xlsx` + single-file HTML dashboard into `runs/<id>/deliverables/`
-- [ ] **TODO (Claude)** wire the Data & Reporting Analyst through one full run of `q3_revenue_decline`
+- [x] **DONE (Claude)** `worksim/brain/__init__.py` — `AgentBrain` interface + deterministic `FakeBrain`
+      + `get_brain()` factory (the swap seam for the future trained model). WORKSIM_BRAIN env selects.
+- [x] **DONE (Claude)** `worksim/brain/llm.py` — `AnthropicBrain` via the official `anthropic` SDK (lazy import;
+      key from env, never committed). Model defaults to `claude-opus-5`, override with WORKSIM_BRAIN_MODEL.
+- [x] **DONE (Claude)** `worksim/personas.py` — `worker_system` + `task_prompt`, data-driven from cards; always
+      uses `worker_view()`. Test enforces hidden_truth can't leak into any persona string.
+- [x] **DONE (Claude)** `worksim/run.py` — full loop wired: scenario→task→assign→persona→brain→deliverable(.md)
+      +transcript. **Runs offline today via FakeBrain** (34 tests green). Real-LLM run needs a key
+      (`WORKSIM_BRAIN=anthropic`); richer deliverables swap in at the marked seam once the renderers land.
+- [ ] **TODO (Codex)** `worksim/deliverables/xlsx.py` + `dashboard.py` — real `.xlsx` + single-file HTML dashboard
+      into `runs/<id>/deliverables/`. **Integration seam:** `worksim/run.py` writes the brain's output as `.md`
+      today; extend it to call your renderer(s) so the Data Analyst emits a real spreadsheet + dashboard.
 
 ## M5 — Web app
 - [ ] **CLAIMED (Grok)** `worksim/app.py` — FastAPI, `/api/v1` router, serve `web/index.html`, run lifecycle,
