@@ -1,0 +1,111 @@
+# Intended primary role: application_support_analyst (§8)
+scenario_id: five_users_app_down
+title: Five Users Report ClientSphere Isn't Working
+summary: >
+  Five users opened tickets within twenty minutes saying ClientSphere "isn't
+  working." Leadership wants to know whether this is one outage, five separate
+  problems, a permissions issue, a bad deploy, the network, bad data, or user
+  error — and what to do first.
+
+company:
+  name: Helix Benefits
+  cash: 18600000
+  employees: 290
+  customers: 47
+  markets:
+    US:
+      revenue: 31000000
+  products:
+    clientsphere:
+      customers: 47
+      uptime: 0.998
+    member_portal:
+      customers: 47
+      uptime: 0.995
+  projects:
+    - ClientSphere v14.3 rollout
+    - SSO hardening
+  risks:
+    - open enrollment season
+    - cloud concentration
+  competitors:
+    - NovaWorks
+    - Ardent Systems
+
+events:
+  - id: five_tickets_flood
+    trigger: scenario_start
+    requester: Support Desk Lead
+    priority: high
+    deadline: 2 simulated hours
+    summary: >
+      Five "ClientSphere isn't working" tickets landed between 08:41 and 09:02.
+      Users cannot do their jobs. Triage: one incident or five, and the likely
+      cause. Restore access or escalate with evidence.
+  - id: noc_no_page
+    trigger: t_plus_20m
+    requester: NOC
+    priority: medium
+    deadline: 1 simulated hour
+    summary: >
+      NOC reports no PagerDuty page, unauthenticated /status is 200, and last
+      night's database failover is marked complete. They are not opening a
+      Sev-1 unless Support can show blast radius beyond these five users.
+
+# Requestable evidence. Workers pull these by name via the information broker and must
+# synthesize the answer themselves — no single document states the conclusion.
+documents:
+  ticket_dump_five_users: >
+    Five SupportDesk tickets, all Priority 2, all ClientSphere:
+    INC-4411 08:41 Dana Ortiz, AE, Sales-West — "blank page after login, toast
+    says Something went wrong."
+    INC-4412 08:47 Priya Shah, AE, Sales-West — "can't load Accounts, same toast."
+    INC-4413 08:51 Jordan Hale, AE, Sales-West — "Accounts and Opportunities
+    both fail to open."
+    INC-4414 08:58 Chris Nguyen, AE, Sales-West — "app isn't working, I have a
+    9am demo."
+    INC-4415 09:02 Avery Kim, AE, Sales-West — "can't load Accounts."
+    No other ClientSphere tickets in the last 12 hours.
+  user_directory_extract: >
+    All five reporters: Profile = Account Executive, Region__c = West,
+    Permission set group = AE-Standard, last login this morning after 08:30.
+    Helix has 22 AEs: 5 West, 9 East, 8 Central. East and Central AEs have
+    logged in this morning with no tickets. The five West AEs are the entire
+    West AE roster.
+  deploy_log_overnight: >
+    ClientSphere production 02:14 UTC: v14.3.1 "nav v2". Change: login-flow
+    assignment of permission set cs_nav_v2 when Region__c = West (pilot).
+    Post-deploy health check (unauthenticated /status) passed at 02:19.
+    Change ticket CHG-1184 approved as "low risk, West AE pilot, rollback =
+    remove login-flow assignment."
+  permission_set_diff: >
+    cs_nav_v2 (new in v14.3.1): Apex class NavController allowed; custom object
+    NavConfig__c CRUD = none; Accounts / Opportunities object perms unchanged
+    from AE-Standard. AE-Standard itself was not modified. NavController queries
+    NavConfig__c on every authenticated page load; a missing object permission
+    surfaces as a generic toast, not an admin error.
+  monitoring_uptime: >
+    Last 24h ClientSphere availability 99.82% (two 3-minute blips on the
+    unauthenticated status probe at 01:50 and 01:53). Authenticated error rate
+    is elevated only for users whose session hash maps to Region=West (~2% of
+    sessions) starting 02:20. East/Central authenticated error rate unchanged.
+    No Sev-1, no PagerDuty.
+  rumored_db_failover: >
+    DBA notes 01:50 UTC: planned replica promotion, lag 0, "no user impact
+    expected." Application connection pool recovered by 01:54. No schema
+    change. The 01:50/01:53 status blips match this window and pre-date the
+    02:14 deploy.
+
+# Engine-only. The scenario engine reveals this only through the work; personas
+# never see it directly. It is the ground truth the Evaluator grades against.
+hidden_truth: >
+  One cause, five tickets — not an outage and not five independent problems.
+  The 02:14 ClientSphere v14.3.1 deploy assigned a new permission set
+  (cs_nav_v2) via a West-only login flow. That set lets NavController run but
+  does not grant NavConfig__c, so every authenticated page load toasts
+  "Something went wrong" for the five West AEs (the entire pilot). Health
+  checks stayed green because they are unauthenticated. East/Central AEs are
+  fine; Accounts object perms did not change. The 01:50 database failover is
+  a red herring (completed, lag 0, before the deploy). Fix: roll back the
+  login-flow assignment or grant NavConfig__c read on cs_nav_v2, then confirm
+  the five users can load Accounts.

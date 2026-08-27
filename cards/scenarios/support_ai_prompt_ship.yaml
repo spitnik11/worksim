@@ -1,0 +1,110 @@
+# Intended primary role: ai_quality_analyst (§7)
+scenario_id: support_ai_prompt_ship
+title: Ship the Support-AI Prompt Update?
+summary: >
+  The support-AI prompt was updated last night. Golden-set accuracy moved from
+  92% to 95%. Policy compliance was 98% on the old prompt and has not been
+  re-run. A board demo is Friday. Decide whether to ship, hold, or ship with
+  constraints — and say why.
+
+company:
+  name: Vesper Credit
+  cash: 41200000
+  employees: 610
+  customers: 140
+  markets:
+    US:
+      revenue: 58000000
+    UK:
+      revenue: 9000000
+  products:
+    card_platform:
+      customers: 140
+      uptime: 0.999
+    support_ai:
+      customers: 1
+      uptime: 0.994
+  projects:
+    - support-AI copilot GA
+    - Reg E complaint-handling upgrade
+  risks:
+    - promised-credit compliance
+    - model drift
+    - board demo lock-in
+  competitors:
+    - Helix Benefits
+    - Ardent Systems
+
+events:
+  - id: prompt_update_ready_to_ship
+    trigger: scenario_start
+    requester: VP Customer Support
+    priority: high
+    deadline: 8 simulated hours
+    summary: >
+      Support-AI prompt v3.4 is on staging. Accuracy 92% → 95% on the golden
+      set. Policy eval was 98% on v3.3 and was not re-run. I want this in
+      production Friday for the board demo. Ship, hold, or ship with a
+      guardrail — written recommendation with evidence.
+  - id: legal_asks_about_credits
+    trigger: t_plus_3h
+    requester: Compliance Counsel
+    priority: high
+    deadline: 4 simulated hours
+    summary: >
+      If the new prompt can promise a credit or a refund without a human,
+      we have a Reg E problem. Confirm whether policy tests were run on v3.4
+      before anyone talks to the board.
+
+# Requestable evidence. Workers pull these by name via the information broker and must
+# synthesize the answer themselves — no single document states the conclusion.
+documents:
+  golden_set_scores: >
+    Golden set n=200, same items both versions.
+    v3.3: 184/200 = 92.0%. v3.4: 190/200 = 95.0%.
+    Newly passing (12): 11 tagged refund_or_goodwill, 1 tagged hours_of_operation.
+    Newly failing (6): 4 tagged identity_verification, 2 tagged fee_schedule.
+    No policy labels on this set — accuracy only.
+  prompt_diff_v33_v34: >
+    Removed: "Never commit to refunds, credits, or SLA exceptions; escalate
+    those to a human."
+    Added: "Be maximally helpful; resolve the ticket if you can. Customers
+    should feel taken care of."
+    Unchanged: identity-verification script, fee-schedule citation rules,
+    "do not invent account numbers."
+    File: prompts/support_v3.4.txt. Author: enablement intern. Reviewer: none.
+  runtime_config_commit: >
+    Same PR as the prompt (PR-2291, mixed commit). runtime.yaml:
+    temperature 0.2 → 0.7. max_tokens unchanged. Retrieval top-k unchanged.
+    Commit message: "prompt v3.4 + a little more warmth." Temperature is not
+    mentioned in the prompt file or the release ticket.
+  old_policy_eval: >
+    Last policy eval: v3.3, 21 days ago, n=40 policy items, 39/40 = 97.5%
+    (rounded to 98% in the exec slide). The one fail was a fee-schedule
+    hallucination, later fixed in retrieval. v3.4 has no policy eval row.
+    Policy set still exists in eval/policy_v1.jsonl (40 items, 18 tagged
+    refund_or_credit).
+  sample_v34_refund_outputs: >
+    Eight refund-adjacent staging transcripts, v3.4, temperature 0.7:
+    6 of 8 include an unprompted commitment ("I'll get a credit issued",
+    "we'll make this right on your next statement", "I can waive that fee").
+    2 of 8 correctly escalate. None of the 6 commitments match an approved
+    goodwill matrix row. v3.3 on the same eight: 0 commitments, 8 escalations.
+  board_demo_note: >
+    Friday 10:00 board slot is locked. VP CS slide currently says "Support AI
+    accuracy 95%, ready for GA." Legal and Risk are not on the demo invite.
+    Rollback of a production prompt is a 45-minute change window; rollback
+    after a board demo is a communications problem, not a technical one.
+
+# Engine-only. The scenario engine reveals this only through the work; personas
+# never see it directly. It is the ground truth the Evaluator grades against.
+hidden_truth: >
+  Do not ship v3.4 on Friday. The 92% → 95% accuracy lift is real on the
+  golden set, but 11 of 12 newly-passing items are refund/goodwill tickets:
+  the prompt dropped the "never commit to refunds/credits" rule and the same
+  PR raised temperature 0.2 → 0.7. A 40-item policy eval was not re-run; a
+  staging sample of 8 refund-adjacent tickets yields 6 unprompted credit
+  promises (Reg E / card-network risk). Identity-verification and fee-schedule
+  items also regressed. Hold the release, restore the policy sentence, pin
+  temperature at 0.2, rerun policy + accuracy, then decide. "Accuracy went
+  up, ship it" is the trap.
