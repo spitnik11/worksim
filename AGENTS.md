@@ -58,6 +58,10 @@ them; only the Evaluator does. Always send `TaskPacket.worker_view()` (strips it
 - Repo stays **private**. Never commit secrets, API keys, `.env`, or `*.local.yaml`
   (`.gitignore` covers these — keep it that way).
 - Small, focused commits. Run `python -m pytest -q` green before committing.
+- **Shared working tree — stage only your OWN files.** All three agents share this one git
+  checkout. Never `git add -A` / `git add .` — you would sweep another agent's in-progress work
+  into your commit. Stage explicit paths only (e.g. `git add worksim/assign.py tests/test_assign.py`).
+  `git commit` (no `-a`). If `git status` shows files you didn't touch, leave them unstaged.
 
 ## How to claim work
 
